@@ -5,6 +5,11 @@ $(document).ready(function() {
     data = json;
     handleDeepLink(); // check URL params on load
   });
+
+  // Listen for browser back/forward
+  window.addEventListener("popstate", function() {
+    handleDeepLink();
+  });
 });
 
 // Handle deep link navigation
@@ -20,7 +25,7 @@ function handleDeepLink() {
       showProducts(category, false);
     }
   } else {
-    showCategories();
+    showCategories(false);
   }
 }
 
