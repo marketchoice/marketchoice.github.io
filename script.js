@@ -95,13 +95,13 @@ function showProductDetails(category, index, pushState = true) {
     $("#product-details").empty().removeClass("hidden").hide();
 
     $("#product-details").append(`
-      <div class="card shadow-lg animate__animated animate__fadeIn">
-        <img src="${product.image}" class="card-img-top img-fluid" alt="${product.name}">
-        <div class="card-body">
+      <div class="product-detail-card animate__animated animate__fadeIn">
+        <img src="${product.image}" alt="${product.name}" class="img-fluid">
+        <div class="product-detail-info">
           <h2>${product.name}</h2>
           <p>${product.specs}</p>
-          <a href="${product.link}" target="_blank" class="btn btn-primary">Buy Now</a>
-          <button class="btn btn-secondary mt-3" onclick="showProducts('${category}')">← Back to ${category}</button>
+          <a href="${product.link}" target="_blank" class="btn btn-primary mb-3">Buy Now</a>
+          <button class="btn btn-secondary" onclick="showProducts('${category}')">← Back to ${category}</button>
         </div>
       </div>
     `);
@@ -113,3 +113,4 @@ function showProductDetails(category, index, pushState = true) {
     history.pushState({}, "", `index.html?category=${encodeURIComponent(category)}&product=${index}`);
   }
 }
+
