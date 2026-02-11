@@ -1,7 +1,7 @@
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #fdfdfd;
-  color: #333;
+  background-color: #f8f9fa;
+  color: #212529;
 }
 
 h1, h2, h5 {
@@ -10,21 +10,63 @@ h1, h2, h5 {
 
 .card {
   border: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.card-img-top {
+  height: 220px;
+  object-fit: cover;
+}
+
+.product-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
 }
 
 .btn-primary {
   background-color: #0069d9;
   border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
 }
 .btn-primary:hover {
   background-color: #0056b3;
 }
 
+.btn-secondary {
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+}
+
 .hidden {
   display: none;
+}
+
+.product-detail-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+.product-detail-card img {
+  flex: 1 1 300px;
+  max-width: 400px;
+  border-radius: 8px;
+}
+.product-detail-info {
+  flex: 1 1 300px;
+}
+.product-detail-info h2 {
+  margin-bottom: 1rem;
+}
+.product-detail-info p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
 }
