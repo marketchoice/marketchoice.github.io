@@ -3,13 +3,13 @@
     {
       "name": "iPhone 15",
       "specs": "128GB, A17 chip, Dual camera, 6.1-inch display",
-      "image": "images/iphone15.jpg",
+      "image": "images/product.jpg",
       "link": "https://affiliate-link.com/iphone15"
     },
     {
       "name": "Samsung Galaxy S24",
       "specs": "256GB, Snapdragon 8 Gen 3, Triple camera, 6.5-inch display",
-      "image": "images/galaxyS24.jpg",
+      "image": "images/product.jpg",
       "link": "https://affiliate-link.com/galaxyS24"
     }
   ],
@@ -17,13 +17,13 @@
     {
       "name": "MacBook Air M2",
       "specs": "13-inch, 256GB SSD, 8GB RAM, M2 chip",
-      "image": "images/macbook.jpg",
+      "image": "images/product.jpg",
       "link": "https://affiliate-link.com/macbook"
     },
     {
       "name": "Dell XPS 13",
       "specs": "13.4-inch, 512GB SSD, 16GB RAM, Intel i7",
-      "image": "images/dellxps.jpg",
+      "image": "images/product.jpg",
       "link": "https://affiliate-link.com/dellxps"
     }
   ],
@@ -31,13 +31,13 @@
     {
       "name": "Instant Pot",
       "specs": "7-in-1 Electric Pressure Cooker, 6 Quart",
-      "image": "images/instantpot.jpg",
+      "image": "images/product.jpg",
       "link": "https://affiliate-link.com/instantpot"
     },
     {
       "name": "Dyson V15 Vacuum",
       "specs": "Cordless, HEPA filter, 60 min runtime",
-      "image": "images/dyson.jpg",
+      "image": "images/product.jpg",
       "link": "https://affiliate-link.com/dyson"
     }
   ]
