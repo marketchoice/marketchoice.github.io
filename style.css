@@ -1,19 +1,28 @@
 body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background: #f9f9f9;
+  font-family: 'Inter', sans-serif;
+  background-color: #fdfdfd;
+  color: #333;
+}
+
+h1, h2, h5 {
+  font-weight: 600;
 }
 
 .card {
+  border: none;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
 }
 
-.btn {
-  width: 100%;
-  margin-top: 10px;
+.btn-primary {
+  background-color: #0069d9;
+  border: none;
+}
+.btn-primary:hover {
+  background-color: #0056b3;
 }
 
 .hidden {
