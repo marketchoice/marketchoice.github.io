@@ -1,7 +1,27 @@
+:root {
+  --primary-color: #0056b3;
+  --secondary-color: #6c757d;
+  --background-color: #f8f9fa;
+}
+
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: #f8f9fa;
+  background-color: var(--background-color);
   color: #212529;
+}
+
+.navbar {
+  background-color: var(--primary-color) !important;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+}
+.btn-primary:hover {
+  background-color: #004494;
+}
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: #fff;
 }
 
 h1, h2, h5 {
@@ -31,13 +51,9 @@ h1, h2, h5 {
 }
 
 .btn-primary {
-  background-color: #0069d9;
   border: none;
   border-radius: 6px;
   padding: 0.6rem 1.2rem;
-}
-.btn-primary:hover {
-  background-color: #0056b3;
 }
 
 .btn-secondary {
@@ -70,3 +86,22 @@ h1, h2, h5 {
   color: #555;
   margin-bottom: 1.5rem;
 }
+
+.product-detail-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.product-detail-actions .btn {
+  flex: 1 1 auto;
+}
+
+.card.product {
+  height: 100%;
+  border-radius: 8px;
+}
+.card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
