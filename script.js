@@ -29,7 +29,8 @@ function showCategories() {
 }
 
 function showProducts(category) {
-  $("#categories").fadeOut(300, function() {
+  // Hide product details when going back
+  $("#product-details").fadeOut(300, function() {
     $("#products").empty().removeClass("hidden").hide();
 
     $("#products").append(`<h2 class="mb-4">${category}</h2><div class="row g-4">`);
@@ -37,7 +38,8 @@ function showProducts(category) {
     data[category].forEach((product, index) => {
       $("#products").append(`
         <div class="col-sm-6 col-md-4">
-          <div class="card product shadow-sm animate__animated animate__fadeInUp" onclick="showProductDetails('${category}', ${index})">
+          <div class="card product shadow-sm animate__animated animate__fadeInUp" 
+               onclick="showProductDetails('${category}', ${index})">
             <img src="${product.image}" class="card-img-top img-fluid" alt="${product.name}">
             <div class="card-body">
               <h5 class="card-title">${product.name}</h5>
@@ -47,10 +49,16 @@ function showProducts(category) {
       `);
     });
 
-    $("#products").append(`</div><div class="mt-4"><button class="btn btn-secondary" onclick="showCategories()">← Back to Categories</button></div>`);
+    $("#products").append(`</div>
+      <div class="mt-4">
+        <button class="btn btn-secondary" onclick="showCategories()">← Back to Categories</button>
+      </div>`);
 
     $("#products").fadeIn(500);
   });
+
+  // Also hide categories
+  $("#categories").fadeOut(300);
 }
 
 function showProductDetails(category, index) {
@@ -73,3 +81,4 @@ function showProductDetails(category, index) {
     $("#product-details").fadeIn(500);
   });
 }
+
