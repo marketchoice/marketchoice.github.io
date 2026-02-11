@@ -1,15 +1,17 @@
 let data = {};
+let currentPage = 1;
+const pageSize = 15;
 
 $(document).ready(function() {
   $.getJSON("products.json", function(json) {
     data = json;
-    handleDeepLink(); // initial render
+    handleDeepLink();
   });
 
   // Browser back/forward support
   window.addEventListener("popstate", function() {
-    resetViews();       // clear all sections
-    handleDeepLink();   // re-render based on URL
+    resetViews();
+    handleDeepLink();
   });
 });
 
@@ -61,7 +63,6 @@ function showCategories(pushState = true) {
 function showProducts(category, pushState = true, page = 1) {
   resetViews();
   const products = data[category];
-  const pageSize = 15;
   const start = (page - 1) * pageSize;
   const end = start + pageSize;
   const paginated = products.slice(start, end);
@@ -71,26 +72,43 @@ function showProducts(category, pushState = true, page = 1) {
   paginated.forEach((product, index) => {
     const globalIndex = start + index;
     $("#products").append(`
-  <div class="col-sm-6 col-md-4">
-    <div class="card product shadow-sm animate__animated animate__fadeInUp" 
-         onclick="showProductDetails('${category}', ${globalIndex})">
-      <img src="${product.image}" class="card-img-top img-fluid" alt="${product.name}">
-      <div class="card-body">
-        <h5 class="product-title">${product.name}</h5>
+      <div class="col-sm-6 col-md-4">
+        <div class="card product shadow-sm animate__animated animate__fadeInUp" 
+             onclick="showProductDetails('${category}', ${globalIndex})">
+          <img src="${product.image}" class="card-img-top" alt="${product.name}">
+          <div class="card-body text-center">
+            <h5 class="card-title">${product.name}</h5>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-`);
+    `);
   });
 
-  // Pagination
+  // Pagination controls
   const totalPages = Math.ceil(products.length / pageSize);
   let paginationHTML = `<nav><ul class="pagination justify-content-center">`;
-  for (let i = 1; i <= totalPages; i++) {
-    paginationHTML += `<li class="page-item ${i === page ? 'active' : ''}">
-      <button class="page-link" onclick="showProducts('${category}', true, ${i})">${i}</button>
-    </li>`;
+
+  if (page > 1) {
+    paginationHTML += `
+      <li class="page-item">
+        <button class="page-link" onclick="showProducts('${category}', true, ${page-1})">Previous</button>
+      </li>`;
   }
+
+  for (let i = 1; i <= totalPages; i++) {
+    paginationHTML += `
+      <li class="page-item ${i === page ? 'active' : ''}">
+        <button class="page-link" onclick="showProducts('${category}', true, ${i})">${i}</button>
+      </li>`;
+  }
+
+  if (page < totalPages) {
+    paginationHTML += `
+      <li class="page-item">
+        <button class="page-link" onclick="showProducts('${category}', true, ${page+1})">Next</button>
+      </li>`;
+  }
+
   paginationHTML += `</ul></nav>`;
   $("#products").append(paginationHTML);
 
