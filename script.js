@@ -1,5 +1,5 @@
 let data = {};
-const pageSize = 15;
+const pageSize = 12;
 
 $(document).ready(function() {
   $.getJSON("products.json", function(json) {
@@ -7,21 +7,19 @@ $(document).ready(function() {
     handleDeepLink();
   });
 
-  // Browser back/forward support
   window.addEventListener("popstate", function() {
     resetViews();
     handleDeepLink();
   });
 });
 
-// Reset all views before rendering
 function resetViews() {
   $("#categories").hide().empty();
   $("#products").hide().empty();
   $("#product-details").hide().empty();
+  $("#categories-header").hide();
 }
 
-// Handle deep link navigation
 function handleDeepLink() {
   const params = new URLSearchParams(window.location.search);
   const category = params.get("category");
@@ -41,6 +39,7 @@ function handleDeepLink() {
 
 function showCategories(pushState = true) {
   resetViews();
+  $("#categories-header").fadeIn(400);
   $.each(data, function(category) {
     $("#categories").append(`
       <div class="col-sm-6 col-md-4">
@@ -66,52 +65,62 @@ function showProducts(category, pushState = true, page = 1) {
   const end = start + pageSize;
   const paginated = products.slice(start, end);
 
-  $("#products").append(`<h2 class="mb-4">${category}</h2><div class="row g-4">`);
+  let html = `<h2 class="mb-4">${category}</h2><div class="row g-4">`;
 
   paginated.forEach((product, index) => {
     const globalIndex = start + index;
-    $("#products").append(`
+    html += `
       <div class="col-sm-6 col-md-4">
         <div class="card product shadow-sm animate__animated animate__fadeInUp" 
              onclick="showProductDetails('${category}', ${globalIndex})">
-          <img src="${product.image}" class="card-img-top" alt="${product.name}">
-          <div class="card-body text-center">
-            <h5 class="card-title">${product.name}</h5>
+          <div class="card-horizontal">
+            <img src="${product.image}" class="card-thumb" alt="${product.name}">
+            <div class="card-body">
+              <h5 class="card-title">${product.name}</h5>
+            </div>
           </div>
         </div>
       </div>
-    `);
+    `;
   });
 
-  // Pagination controls
+  html += `</div>`; // close row
+
   const totalPages = Math.ceil(products.length / pageSize);
-  let paginationHTML = `<nav><ul class="pagination justify-content-center">`;
+
+if (totalPages > 1) {
+  html += `<nav><ul class="pagination justify-content-center">`;
 
   if (page > 1) {
-    paginationHTML += `
+    html += `
       <li class="page-item">
-        <button class="page-link" onclick="showProducts('${category}', true, ${page-1})">Previous</button>
+        <button class="page-link" onclick="showProducts('${category}', true, ${page-1})" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </button>
       </li>`;
   }
 
   for (let i = 1; i <= totalPages; i++) {
-    paginationHTML += `
+    html += `
       <li class="page-item ${i === page ? 'active' : ''}">
         <button class="page-link" onclick="showProducts('${category}', true, ${i})">${i}</button>
       </li>`;
   }
 
   if (page < totalPages) {
-    paginationHTML += `
+    html += `
       <li class="page-item">
-        <button class="page-link" onclick="showProducts('${category}', true, ${page+1})">Next</button>
+        <button class="page-link" onclick="showProducts('${category}', true, ${page+1})" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </button>
       </li>`;
   }
 
-  paginationHTML += `</ul></nav>`;
-  $("#products").append(paginationHTML);
+  html += `</ul></nav>`;
+}
 
-  $("#products").fadeIn(500);
+
+  $("#products").append(html).fadeIn(500);
 
   if (pushState) {
     history.pushState({}, "", `index.html?category=${encodeURIComponent(category)}&page=${page}`);
@@ -122,6 +131,24 @@ function showProductDetails(category, index, pushState = true) {
   resetViews();
   const product = data[category][index];
 
+  let linksHTML = "";
+  product.links.forEach(link => {
+    let icon = "";
+    if (link.store === "amazon") {
+      icon = `<img src="images/amazon.png" alt="Amazon" class="store-icon">`;
+    } else if (link.store === "flipkart") {
+      icon = `<img src="images/flipkart.png" alt="Flipkart" class="store-icon">`;
+    } else {
+      icon = `<span class="store-icon">${link.store}</span>`;
+    }
+
+    linksHTML += `
+      <a href="${link.url}" target="_blank" class="btn btn-primary align-items-center gap-2">
+        ${icon} Buy on ${link.store.charAt(0).toUpperCase() + link.store.slice(1)}
+      </a>
+    `;
+  });
+
   $("#product-details").append(`
     <div class="product-detail-card animate__animated animate__fadeIn">
       <img src="${product.image}" alt="${product.name}" class="img-fluid">
@@ -129,7 +156,7 @@ function showProductDetails(category, index, pushState = true) {
         <h2>${product.name}</h2>
         <p>${product.specs}</p>
         <div class="product-detail-actions">
-          <a href="${product.link}" target="_blank" class="btn btn-primary">Buy Now</a>
+          ${linksHTML}
           <button class="btn btn-secondary" onclick="showProducts('${category}')">← Back to ${category}</button>
         </div>
       </div>
