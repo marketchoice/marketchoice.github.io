@@ -3,20 +3,38 @@ let data = {};
 $(document).ready(function() {
   $.getJSON("products.json", function(json) {
     data = json;
-    showCategories();
+    handleDeepLink(); // check URL params on load
   });
 });
 
-function showCategories() {
+// Handle deep link navigation
+function handleDeepLink() {
+  const params = new URLSearchParams(window.location.search);
+  const category = params.get("category");
+  const productIndex = params.get("product");
+
+  if (category && data[category]) {
+    if (productIndex !== null && data[category][productIndex]) {
+      showProductDetails(category, productIndex, false); // false = don't pushState again
+    } else {
+      showProducts(category, false);
+    }
+  } else {
+    showCategories();
+  }
+}
+
+function showCategories(pushState = true) {
   $("#categories").fadeOut(200, function() {
     $(this).empty();
     $.each(data, function(category) {
       $("#categories").append(`
         <div class="col-sm-6 col-md-4">
-          <div class="card shadow-sm animate__animated animate__fadeIn">
+          <div class="card category shadow-sm animate__animated animate__fadeIn" 
+               onclick="showProducts('${category}')">
             <div class="card-body text-center">
               <h5 class="card-title">${category}</h5>
-              <button class="btn btn-primary mt-3" onclick="showProducts('${category}')">View Products</button>
+              <button class="btn btn-primary mt-3">View Products</button>
             </div>
           </div>
         </div>
@@ -26,11 +44,15 @@ function showCategories() {
   });
 
   $("#products, #product-details").fadeOut(300);
+
+  if (pushState) {
+    history.pushState({}, "", "index.html");
+  }
 }
 
-function showProducts(category) {
-  // Hide product details when going back
-  $("#product-details").fadeOut(300, function() {
+function showProducts(category, pushState = true) {
+  $("#product-details").fadeOut(300);
+  $("#categories").fadeOut(300, function() {
     $("#products").empty().removeClass("hidden").hide();
 
     $("#products").append(`<h2 class="mb-4">${category}</h2><div class="row g-4">`);
@@ -57,11 +79,12 @@ function showProducts(category) {
     $("#products").fadeIn(500);
   });
 
-  // Also hide categories
-  $("#categories").fadeOut(300);
+  if (pushState) {
+    history.pushState({}, "", `index.html?category=${encodeURIComponent(category)}`);
+  }
 }
 
-function showProductDetails(category, index) {
+function showProductDetails(category, index, pushState = true) {
   const product = data[category][index];
   $("#products").fadeOut(300, function() {
     $("#product-details").empty().removeClass("hidden").hide();
@@ -80,5 +103,8 @@ function showProductDetails(category, index) {
 
     $("#product-details").fadeIn(500);
   });
-}
 
+  if (pushState) {
+    history.pushState({}, "", `index.html?category=${encodeURIComponent(category)}&product=${index}`);
+  }
+}
