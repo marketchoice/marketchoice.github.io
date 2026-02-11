@@ -27,7 +27,7 @@ h1, h2, h5 {
   font-size: 1.25rem;
 }
 
-/* Category & Product cards */
+/* Shared card styles */
 .card {
   border: none;
   border-radius: 8px;
@@ -49,13 +49,13 @@ h1, h2, h5 {
   font-weight: 600;
 }
 
-/* Product list cards */
+/* Product list cards – match category card size */
 .card.product {
-  height: 100%;
   border-radius: 8px;
+  height: auto;
 }
 .card.product .card-img-top {
-  height: 160px; /* same as category cards */
+  height: 160px;       /* same as category cards */
   object-fit: cover;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -126,12 +126,19 @@ h1, h2, h5 {
 }
 
 /* Pagination */
+.pagination {
+  margin-top: 2rem;
+}
+
 .pagination .page-link {
   color: var(--primary-color);
+  border: 1px solid #dee2e6;
 }
+
 .pagination .page-item.active .page-link {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
+  color: #fff;
 }
 
 /* Footer */
