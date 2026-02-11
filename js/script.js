@@ -2,9 +2,16 @@ let data = {};
 const pageSize = 12;
 
 $(document).ready(function() {
-  $.getJSON("products.json", function(json) {
-    data = json;
-    handleDeepLink();
+  // Instead of $.getJSON, read from Firebase
+  firebaseOps.readData("products", function(snapshotData) {
+    if (snapshotData) {
+      data = snapshotData;
+      handleDeepLink();
+    } else {
+      console.warn("No products found in Firebase.");
+      data = {};
+      showCategories(false);
+    }
   });
 
   window.addEventListener("popstate", function() {
@@ -12,6 +19,7 @@ $(document).ready(function() {
     handleDeepLink();
   });
 });
+
 
 function resetViews() {
   $("#categories").hide().empty();
