@@ -44,12 +44,12 @@ h1, h2, h5 {
   font-weight: 600;
 }
 
-/* Product list cards */
+/* Product list cards – same size as category cards */
 .card.product {
   border-radius: 8px;
 }
 .card.product .card-img-top {
-  height: 160px;
+  height: 160px; /* fixed height */
   object-fit: cover;
 }
 .card.product .card-body {
