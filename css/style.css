@@ -214,9 +214,22 @@ footer {
     align-items: center;
   }
   .card-thumb {
-    width: 80px;
+    width: 100px;
     height: auto;
     margin-right: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .product-list-header h2 {
+    margin-bottom: 10px;
+  }
+  .back-category{
+    margin-top:20px;
   }
 }
 

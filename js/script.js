@@ -73,7 +73,13 @@ function showProducts(category, pushState = true, page = 1) {
   const end = start + pageSize;
   const paginated = products.slice(start, end);
 
-  let html = `<h2 class="mb-4">${category}</h2><div class="row g-4">`;
+  let html = `
+  <div class="d-flex justify-content-between align-items-center mb-4 product-list-header">
+    <h2 class="mb-0">${category}</h2>
+    <button class="btn btn-secondary back-category" onclick="showCategories()">← Back to Categories</button>
+  </div>
+  <div class="row g-4">
+`;
 
   paginated.forEach((product, index) => {
     const globalIndex = start + index;
