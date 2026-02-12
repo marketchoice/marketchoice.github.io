@@ -207,5 +207,19 @@ footer {
   text-align: left;
 }
 
+@media (max-width: 576px) {
+  .card-horizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .card-thumb {
+    width: 80px;
+    height: auto;
+    margin-right: 12px;
+  }
+}
+
+
 
 
