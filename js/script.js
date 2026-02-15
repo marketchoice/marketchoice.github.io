@@ -2,6 +2,165 @@ let data = {};
 let currentCategory = null;
 const pageSize = 12;
 
+// ===== SEO HELPER FUNCTIONS =====
+
+/**
+ * Update page title and meta tags dynamically for better SEO
+ */
+function updatePageMeta(title, description, url) {
+  // Update document title
+  document.title = title;
+
+  // Update meta description
+  let metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) metaDesc.setAttribute('content', description);
+
+  // Update Open Graph tags
+  let ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.setAttribute('content', title);
+
+  let ogDesc = document.querySelector('meta[property="og:description"]');
+  if (ogDesc) ogDesc.setAttribute('content', description);
+
+  let ogUrl = document.querySelector('meta[property="og:url"]');
+  if (ogUrl) ogUrl.setAttribute('content', url);
+
+  // Update Twitter Card tags
+  let twitterTitle = document.querySelector('meta[name="twitter:title"]');
+  if (twitterTitle) twitterTitle.setAttribute('content', title);
+
+  let twitterDesc = document.querySelector('meta[name="twitter:description"]');
+  if (twitterDesc) twitterDesc.setAttribute('content', description);
+
+  let twitterUrl = document.querySelector('meta[name="twitter:url"]');
+  if (twitterUrl) twitterUrl.setAttribute('content', url);
+
+  // Update canonical URL
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.setAttribute('href', url);
+}
+
+/**
+ * Add Product structured data (JSON-LD) for rich search results
+ */
+function addProductStructuredData(product, category) {
+  // Remove any existing product structured data
+  const existingScript = document.querySelector('script[data-schema="product"]');
+  if (existingScript) existingScript.remove();
+
+  // Determine availability status
+  const availability = product.inStock === false
+    ? 'https://schema.org/OutOfStock'
+    : 'https://schema.org/InStock';
+
+  // Build offers array
+  const offers = [];
+  if (product.links && product.links.length > 0) {
+    product.links.forEach(link => {
+      const offer = {
+        "@type": "Offer",
+        "url": link.url,
+        "priceCurrency": product.currency || "INR",
+        "price": product.price || "0",
+        "availability": availability,
+        "seller": {
+          "@type": "Organization",
+          "name": link.store
+        }
+      };
+
+      if (product.mrp) {
+        offer.priceValidUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]; // 30 days from now
+      }
+
+      offers.push(offer);
+    });
+  }
+
+  // Build Product schema
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.name,
+    "description": product.specs ? product.specs.replace(/<[^>]*>/g, '') : product.name,
+    "image": "https://marketchoice.github.io/images/product.jpg", // Default image, can be updated when image loads
+    "brand": {
+      "@type": "Brand",
+      "name": category
+    },
+    "category": category
+  };
+
+  // Add offers
+  if (offers.length === 1) {
+    productSchema.offers = offers[0];
+  } else if (offers.length > 1) {
+    productSchema.offers = {
+      "@type": "AggregateOffer",
+      "priceCurrency": product.currency || "INR",
+      "lowPrice": product.price || "0",
+      "highPrice": product.mrp || product.price || "0",
+      "offerCount": offers.length,
+      "offers": offers,
+      "availability": availability
+    };
+  }
+
+  // Add coupon if available
+  if (product.coupon) {
+    productSchema.offers.priceSpecification = {
+      "@type": "UnitPriceSpecification",
+      "priceCurrency": product.currency || "INR",
+      "price": product.price || "0"
+    };
+  }
+
+  // Create and append script tag
+  const script = document.createElement('script');
+  script.setAttribute('type', 'application/ld+json');
+  script.setAttribute('data-schema', 'product');
+  script.textContent = JSON.stringify(productSchema, null, 2);
+  document.head.appendChild(script);
+}
+
+/**
+ * Add BreadcrumbList structured data for navigation
+ */
+function addBreadcrumbStructuredData(items) {
+  // Remove any existing breadcrumb structured data
+  const existingScript = document.querySelector('script[data-schema="breadcrumb"]');
+  if (existingScript) existingScript.remove();
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": items.map((item, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.name,
+      "item": item.url
+    }))
+  };
+
+  const script = document.createElement('script');
+  script.setAttribute('type', 'application/ld+json');
+  script.setAttribute('data-schema', 'breadcrumb');
+  script.textContent = JSON.stringify(breadcrumbSchema, null, 2);
+  document.head.appendChild(script);
+}
+
+/**
+ * Remove dynamic structured data when navigating away
+ */
+function removeDynamicStructuredData() {
+  const productSchema = document.querySelector('script[data-schema="product"]');
+  if (productSchema) productSchema.remove();
+
+  const breadcrumbSchema = document.querySelector('script[data-schema="breadcrumb"]');
+  if (breadcrumbSchema) breadcrumbSchema.remove();
+}
+
+
 $(document).ready(function () {
   // Instead of $.getJSON, read from Firebase
   firebaseOps.readData("products", function (snapshotData) {
@@ -42,6 +201,9 @@ function resetViews() {
   $("#categories-header").hide();
   $("#searchContainer").removeClass("d-flex").hide();
   $("body").removeClass("has-fixed-actions");
+
+  // SEO: Remove dynamic structured data when navigating
+  removeDynamicStructuredData();
 }
 
 function handleDeepLink() {
@@ -64,6 +226,14 @@ function handleDeepLink() {
 function showCategories(pushState = true) {
   currentCategory = null;
   resetViews();
+
+  // SEO: Update meta tags for homepage
+  updatePageMeta(
+    "MarketChoice - Best Deals on Amazon & Flipkart | Compare Prices & Save",
+    "Discover the best deals and discounts on top products from Amazon and Flipkart. Compare prices, find exclusive coupons, and save on electronics, fashion, home goods, and more.",
+    "https://marketchoice.github.io/"
+  );
+
   $("#categories-header").fadeIn(400);
   $.each(data, function (category) {
     $("#categories").append(`
@@ -183,6 +353,20 @@ function showProducts(category, pushState = true, page = 1) {
   currentCategory = category;
   $("#searchInput").val(''); // Clear search on fresh view or pagination reset
 
+  // SEO: Update meta tags for category page
+  const categoryUrl = `https://marketchoice.github.io/index.html?category=${encodeURIComponent(category)}&page=${page}`;
+  updatePageMeta(
+    `${category} - Best Deals & Offers | MarketChoice`,
+    `Browse the best ${category.toLowerCase()} deals from Amazon and Flipkart. Compare prices, find exclusive coupons and discounts on top products.`,
+    categoryUrl
+  );
+
+  // SEO: Add breadcrumb structured data
+  addBreadcrumbStructuredData([
+    { name: "Home", url: "https://marketchoice.github.io/" },
+    { name: category, url: categoryUrl }
+  ]);
+
   const products = data[category];
   const start = (page - 1) * pageSize;
   const end = start + pageSize;
@@ -273,6 +457,28 @@ function showProductDetails(category, index, pushState = true) {
   resetViews();
   $("body").addClass("has-fixed-actions");
   const product = data[category][index];
+
+  // SEO: Update meta tags for product page
+  const productUrl = `https://marketchoice.github.io/index.html?category=${encodeURIComponent(category)}&product=${index}`;
+  const productDescription = product.specs
+    ? product.specs.replace(/<[^>]*>/g, '').substring(0, 155) + '...'
+    : `${product.name} - Find the best price from Amazon and Flipkart with exclusive deals and coupons.`;
+
+  updatePageMeta(
+    `${product.name} - ${category} | MarketChoice`,
+    productDescription,
+    productUrl
+  );
+
+  // SEO: Add breadcrumb structured data
+  addBreadcrumbStructuredData([
+    { name: "Home", url: "https://marketchoice.github.io/" },
+    { name: category, url: `https://marketchoice.github.io/index.html?category=${encodeURIComponent(category)}` },
+    { name: product.name, url: productUrl }
+  ]);
+
+  // SEO: Add Product structured data
+  addProductStructuredData(product, category);
 
   let linksHTML = "";
   const isOutOfStock = product.inStock === false;

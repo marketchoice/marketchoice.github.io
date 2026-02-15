@@ -1,0 +1,18 @@
+# robots.txt for MarketChoice
+# Last updated: 2026-02-15
+
+# Allow all search engines to crawl the entire site
+User-agent: *
+Allow: /
+
+# Disallow crawling of system/config files
+Disallow: /.git/
+Disallow: /js/jquery-3.6.0.min.js
+Disallow: /css/bootstrap.min.css
+
+# Sitemap location
+Sitemap: https://marketchoice.github.io/sitemap.xml
+
+# Crawl-delay for all bots (in seconds)
+# This helps prevent overloading the server
+Crawl-delay: 1

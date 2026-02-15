@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://marketchoice.github.io/</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://marketchoice.github.io/images/favicon.png</image:loc>
+      <image:title>MarketChoice Logo</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Note: Category and product pages are dynamically generated from Firebase -->
+  <!-- For complete indexing, consider implementing server-side rendering or using -->
+  <!-- a script to fetch categories from Firebase and generate this sitemap automatically -->
+  
+  <!-- Example category structure (update with actual categories): -->
+  <!-- 
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Electronics</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  -->
+
+</urlset>

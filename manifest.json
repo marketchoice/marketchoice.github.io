@@ -1,0 +1,21 @@
+{
+  "name": "MarketChoice - Best Deals on Amazon & Flipkart",
+  "short_name": "MarketChoice",
+  "description": "Discover the best deals and discounts on top products from Amazon and Flipkart",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "images/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "lifestyle"],
+  "lang": "en-US",
+  "dir": "ltr"
+}

@@ -3,12 +3,88 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>MarketChoice</title>
+
+  <!-- Primary Meta Tags -->
+  <title>MarketChoice - Best Deals on Amazon & Flipkart | Compare Prices & Save</title>
+  <meta name="title" content="MarketChoice - Best Deals on Amazon & Flipkart | Compare Prices & Save">
+  <meta name="description"
+    content="Discover the best deals and discounts on top products from Amazon and Flipkart. Compare prices, find exclusive coupons, and save on electronics, fashion, home goods, and more.">
+  <meta name="keywords"
+    content="best deals, amazon deals, flipkart offers, discount coupons, price comparison, online shopping, affiliate products, save money, exclusive offers">
+  <meta name="author" content="MarketChoice">
+  <meta name="robots" content="index, follow">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="theme-color" content="#6366f1">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://marketchoice.github.io/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://marketchoice.github.io/">
+  <meta property="og:title" content="MarketChoice - Best Deals on Amazon & Flipkart | Compare Prices & Save">
+  <meta property="og:description"
+    content="Discover the best deals and discounts on top products from Amazon and Flipkart. Compare prices, find exclusive coupons, and save on electronics, fashion, home goods, and more.">
+  <meta property="og:image" content="https://marketchoice.github.io/images/favicon.png">
+  <meta property="og:site_name" content="MarketChoice">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://marketchoice.github.io/">
+  <meta name="twitter:title" content="MarketChoice - Best Deals on Amazon & Flipkart">
+  <meta name="twitter:description"
+    content="Discover the best deals and discounts on top products from Amazon and Flipkart. Compare prices and save!">
+  <meta name="twitter:image" content="https://marketchoice.github.io/images/favicon.png">
+
+  <!-- Geo Tags -->
+  <meta name="geo.region" content="IN">
+  <meta name="geo.placename" content="India">
+
+  <!-- DNS Prefetch & Preconnect for Performance -->
+  <link rel="dns-prefetch" href="https://www.gstatic.com">
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com">
+
+  <!-- Favicon & Web App Manifest -->
   <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="images/favicon.png">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/animate.min.css" />
+
+  <!-- Structured Data - Organization Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "MarketChoice",
+    "url": "https://marketchoice.github.io/",
+    "logo": "https://marketchoice.github.io/images/favicon.png",
+    "description": "Your trusted source for the best deals and discounts from Amazon and Flipkart",
+    "sameAs": []
+  }
+  </script>
+
+  <!-- Structured Data - WebSite Schema with SearchAction -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "MarketChoice",
+    "url": "https://marketchoice.github.io/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://marketchoice.github.io/?search={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- Scripts -->
   <script src="js/jquery-3.6.0.min.js"></script>
 
   <!-- Firebase from CDN -->
@@ -17,28 +93,34 @@
 
   <!-- Your Firebase ops and app code -->
   <script src="js/firebase-ops.js"></script>
-
   <script src="js/script.js"></script>
 </head>
 
 <body>
-  <nav class="navbar navbar-dark shadow-sm fixed-top">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="index.html">
-        <img src="images/favicon.png" alt="Market Choice Logo" style="height:28px; width:auto; margin-right:8px;">
-        Market Choice
-      </a>
-      <div class="d-flex align-items-center">
-        <button id="themeToggle" class="btn btn-outline-light me-3" aria-label="Toggle Dark Mode" style="display:none;">
-          🌙
-        </button>
-        <div id="searchContainer" class="w-100 justify-content-end" style="display:none;">
-          <input type="text" id="searchInput" class="form-control" placeholder="Search products...">
+  <!-- Header / Navigation -->
+  <header>
+    <nav class="navbar navbar-dark shadow-sm fixed-top">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <img src="images/favicon.png" alt="MarketChoice Logo - Your Best Deals Destination"
+            style="height:28px; width:auto; margin-right:8px;">
+          Market Choice
+        </a>
+        <div class="d-flex align-items-center">
+          <button id="themeToggle" class="btn btn-outline-light me-3" aria-label="Toggle Dark Mode"
+            style="display:none;">
+            🌙
+          </button>
+          <div id="searchContainer" class="w-100 justify-content-end" style="display:none;">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search products..."
+              aria-label="Search products">
+          </div>
         </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </header>
 
+  <!-- Main Content -->
   <main class="container my-5">
     <div id="categories-header" class="text-center mb-5">
       <h1 class="fw-bold">Browse Our Categories</h1>
@@ -49,8 +131,14 @@
     <div id="product-details" class="hidden"></div>
   </main>
 
+  <!-- Footer -->
   <footer class="text-center py-3">
-    © 2026 MarketChoice
+    <p class="mb-2">© 2026 MarketChoice</p>
+    <p class="text-muted small">
+      <strong>Affiliate Disclosure:</strong> MarketChoice is a participant in affiliate marketing programs.
+      We may earn a commission when you click on links to products and make a purchase.
+      This helps support our site at no additional cost to you. Thank you for your support!
+    </p>
   </footer>
 </body>
 
