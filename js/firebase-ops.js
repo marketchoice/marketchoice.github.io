@@ -19,7 +19,7 @@ const database = firebase.database();
 
 // Function to read JSON data
 function readData(path, callback) {
-  database.ref(path).on("value", function(snapshot) {
+  database.ref(path).on("value", function (snapshot) {
     callback(snapshot.val());
   });
 }
@@ -34,9 +34,17 @@ function updateData(path, data) {
   database.ref(path).update(data);
 }
 
+// Function to read JSON data once
+function readDataOnce(path, callback) {
+  database.ref(path).once("value").then(function (snapshot) {
+    callback(snapshot.val());
+  });
+}
+
 // Export functions (if using modules)
 window.firebaseOps = {
   readData,
+  readDataOnce,
   writeData,
   updateData
 };
