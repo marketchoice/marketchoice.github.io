@@ -2,6 +2,17 @@ let data = {};
 let currentCategory = null;
 const pageSize = 12;
 
+function getProductImageUrl(product) {
+  if (product.image && product.image.length > 0) {
+    const img = Array.isArray(product.image) ? product.image[0] : product.image;
+    if (typeof img === 'string' && img.startsWith('url:')) {
+      return img.slice(4);
+    }
+    return img;
+  }
+  return "images/product.jpg";
+}
+
 // ===== SEO HELPER FUNCTIONS =====
 
 /**
@@ -69,9 +80,7 @@ function addProductStructuredData(product, category) {
         }
       };
 
-      if (product.mrp) {
-        offer.priceValidUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]; // 30 days from now
-      }
+
 
       offers.push(offer);
     });
@@ -83,7 +92,7 @@ function addProductStructuredData(product, category) {
     "@type": "Product",
     "name": product.name,
     "description": product.specs ? product.specs.replace(/<[^>]*>/g, '') : product.name,
-    "image": "https://marketchoice.github.io/images/product.jpg", // Default image, can be updated when image loads
+    "image": getProductImageUrl(product).startsWith('http') ? getProductImageUrl(product) : "https://marketchoice.github.io/" + getProductImageUrl(product),
     "brand": {
       "@type": "Brand",
       "name": category
@@ -99,21 +108,14 @@ function addProductStructuredData(product, category) {
       "@type": "AggregateOffer",
       "priceCurrency": product.currency || "INR",
       "lowPrice": product.price || "0",
-      "highPrice": product.mrp || product.price || "0",
+      "highPrice": product.price || "0",
       "offerCount": offers.length,
       "offers": offers,
       "availability": availability
     };
   }
 
-  // Add coupon if available
-  if (product.coupon) {
-    productSchema.offers.priceSpecification = {
-      "@type": "UnitPriceSpecification",
-      "priceCurrency": product.currency || "INR",
-      "price": product.price || "0"
-    };
-  }
+
 
   // Create and append script tag
   const script = document.createElement('script');
@@ -263,8 +265,7 @@ function filterCategoryProducts(query) {
 
   const products = data[currentCategory];
   const filtered = products.filter(p =>
-    p.name.toLowerCase().includes(query) ||
-    (p.coupon && p.coupon.toLowerCase().includes(query))
+    p.name.toLowerCase().includes(query)
   );
 
   let html = `
@@ -289,7 +290,6 @@ function filterCategoryProducts(query) {
   html += `</div>`;
 
   $("#products").hide().empty().append(html).fadeIn(200);
-  fetchImages();
 }
 
 // Helper to render card (refactored from showProducts)
@@ -298,24 +298,12 @@ function renderProductCard(product, category, index) {
   let priceHtml = '';
   if (product.price) {
     priceHtml = `<p class="card-text fw-bold text-primary mb-1">${product.currency || ''} ${product.price}</p>`;
-    if (product.mrp && parseFloat(product.mrp) > parseFloat(product.price)) {
-      const discount = Math.round(((product.mrp - product.price) / product.mrp) * 100);
-      priceHtml = `
-                <div class="mb-1">
-                    <span class="fw-bold text-primary">${product.currency || ''} ${product.price}</span>
-                    <small class="text-muted text-decoration-line-through ms-1">${product.currency || ''} ${product.mrp}</small>
-                    <small class="text-success fw-bold ms-1">(${discount}% off)</small>
-                </div>
-            `;
-    }
   }
 
   // Stock Badge
   let badges = '';
   if (product.inStock === false) { // Explicit false check
     badges += `<span class="badge bg-danger position-absolute top-0 end-0 m-2">Out of Stock</span>`;
-  } else if (product.coupon) {
-    badges += `<span class="badge bg-info text-dark position-absolute top-0 end-0 m-2">Code: ${product.coupon}</span>`;
   }
 
   return `
@@ -325,7 +313,7 @@ function renderProductCard(product, category, index) {
              onclick="showProductDetails('${category}', ${index})">
           ${badges}
           <div class="card-horizontal">
-            <img src="images/product.jpg" data-image-key="${product.image ? product.image[0] : ''}" class="card-thumb" alt="${product.name}">
+            <img src="${getProductImageUrl(product)}" class="card-thumb" alt="${product.name}">
             <div class="card-body">
               <h5 class="card-title" title="${product.name}">${product.name}</h5>
               ${priceHtml}
@@ -423,35 +411,12 @@ function showProducts(category, pushState = true, page = 1) {
 
   $("#products").append(html).fadeIn(500);
 
-  // Fetch images for products
-  fetchImages();
 
   if (pushState) {
     history.pushState({}, "", `index.html?category=${encodeURIComponent(category)}&page=${page}`);
   }
 }
 
-function fetchImages() {
-  $(".card-thumb").each(function () {
-    const imgElement = $(this);
-    const imageKey = imgElement.data("image-key");
-    if (imageKey) {
-      // Handle array of images if passed, or single string
-      const keyToUse = Array.isArray(imageKey) ? imageKey[0] : imageKey;
-      getImageData(keyToUse, function (base64Data) {
-        if (base64Data) {
-          imgElement.attr("src", base64Data);
-        }
-      });
-    }
-  });
-}
-
-function getImageData(imageKey, callback) {
-  // Assuming images are stored under "images" node in Firebase. 
-  // If the "json file property" mentioned refers to a different node, update "images" below.
-  firebaseOps.readDataOnce("images/" + imageKey, callback);
-}
 
 function showProductDetails(category, index, pushState = true) {
   resetViews();
@@ -510,37 +475,17 @@ function showProductDetails(category, index, pushState = true) {
   // Price Display in Details
   let priceHtml = '';
   if (product.price) {
-    if (product.mrp && parseFloat(product.mrp) > parseFloat(product.price)) {
-      const discount = Math.round(((product.mrp - product.price) / product.mrp) * 100);
-      priceHtml = `
-                <div class="mb-3">
-                    <h3 class="d-inline text-primary fw-bold">${product.currency || ''} ${product.price}</h3>
-                    <span class="text-muted text-decoration-line-through fs-5 ms-2">${product.currency || ''} ${product.mrp}</span>
-                    <span class="badge bg-success ms-2">${discount}% OFF</span>
-                </div>
-            `;
-    } else {
-      priceHtml = `<h3 class="text-primary fw-bold mb-3">${product.currency || ''} ${product.price}</h3>`;
-    }
+    priceHtml = `<h3 class="text-primary fw-bold mb-3">${product.currency || ''} ${product.price}</h3>`;
   }
 
-  // Coupon Display
-  let couponHtml = '';
-  if (product.coupon) {
-    couponHtml = `
-        <div class="alert alert-info d-flex align-items-center mb-3" role="alert">
-            <strong>Coupon Available:</strong> <span class="badge bg-white text-dark ms-2 border fs-6">${product.coupon}</span>
-        </div>
-      `;
-  }
+
 
   $("#product-details").append(`
     <div class="product-detail-card animate__animated animate__fadeIn">
-      <img src="images/product.jpg" data-image-key="${product.image ? (Array.isArray(product.image) ? product.image[0] : product.image) : ''}" alt="${product.name}" class="img-fluid product-detail-image">
+      <img src="${getProductImageUrl(product)}" alt="${product.name}" class="img-fluid product-detail-image">
       <div class="product-detail-info">
         <h2>${product.name}</h2>
         ${priceHtml}
-        ${couponHtml}
         <div class="specs-content">${product.specs}</div>
       </div>
     </div>
@@ -550,16 +495,6 @@ function showProductDetails(category, index, pushState = true) {
     </div>
   `);
 
-  // Fetch image for details view
-  const detailImg = $(".product-detail-image");
-  const detailKey = detailImg.data("image-key");
-  if (detailKey) {
-    getImageData(detailKey, function (base64Data) {
-      if (base64Data) {
-        detailImg.attr("src", base64Data);
-      }
-    });
-  }
 
   $("#product-details").fadeIn(500);
 
