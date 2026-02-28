@@ -213,13 +213,21 @@ function handleDeepLink() {
   const category = params.get("category");
   const productIndex = params.get("product");
   const page = parseInt(params.get("page")) || 1;
+  const searchQuery = params.get("search");
 
   if (category && data[category]) {
     if (productIndex !== null && data[category][productIndex]) {
       showProductDetails(category, productIndex, false);
     } else {
       showProducts(category, false, page);
+      if (searchQuery) {
+        $("#searchInput").val(searchQuery).trigger("input");
+      }
     }
+  } else if (searchQuery) {
+    // Global search or search within categories logic
+    // For now, let's just populate the input if we are on the homepage
+    $("#searchInput").val(searchQuery).trigger("input");
   } else {
     showCategories(false);
   }
