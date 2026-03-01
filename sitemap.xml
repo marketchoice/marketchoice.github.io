@@ -5,7 +5,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://marketchoice.github.io/</loc>
-    <lastmod>2026-02-15</lastmod>
+    <lastmod>2026-03-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -14,18 +14,171 @@
     </image:image>
   </url>
   
-  <!-- Note: Category and product pages are dynamically generated from Firebase -->
-  <!-- For complete indexing, consider implementing server-side rendering or using -->
-  <!-- a script to fetch categories from Firebase and generate this sitemap automatically -->
-  
-  <!-- Example category structure (update with actual categories): -->
-  <!-- 
+  <!-- Category: Beauty & Personal Care -->
   <url>
-    <loc>https://marketchoice.github.io/index.html?category=Electronics</loc>
-    <lastmod>2026-02-15</lastmod>
+    <loc>https://marketchoice.github.io/index.html?category=Beauty%20%26%20Personal%20Care</loc>
+    <lastmod>2026-03-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  -->
-
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Beauty%20%26%20Personal%20Care&amp;product=0</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Beauty%20%26%20Personal%20Care&amp;product=1</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Beauty%20%26%20Personal%20Care&amp;product=2</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Beauty%20%26%20Personal%20Care&amp;product=3</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Beauty%20%26%20Personal%20Care&amp;product=4</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Beauty%20%26%20Personal%20Care&amp;product=5</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Beauty%20%26%20Personal%20Care&amp;product=6</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Beauty%20%26%20Personal%20Care&amp;product=7</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Beauty%20%26%20Personal%20Care&amp;product=8</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Beauty%20%26%20Personal%20Care&amp;product=9</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Beauty%20%26%20Personal%20Care&amp;product=10</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Beauty%20%26%20Personal%20Care&amp;product=11</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Beauty%20%26%20Personal%20Care&amp;product=12</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Beauty%20%26%20Personal%20Care&amp;product=13</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- Category: Cell Phones and Accessories -->
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Cell%20Phones%20and%20Accessories</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Cell%20Phones%20and%20Accessories&amp;product=0</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Cell%20Phones%20and%20Accessories&amp;product=1</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Cell%20Phones%20and%20Accessories&amp;product=2</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Cell%20Phones%20and%20Accessories&amp;product=3</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Cell%20Phones%20and%20Accessories&amp;product=4</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- Category: Kitchen, Bathroom & Home Care -->
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Kitchen%2C%20Bathroom%20%26%20Home%20Care</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Kitchen%2C%20Bathroom%20%26%20Home%20Care&amp;product=0</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Kitchen%2C%20Bathroom%20%26%20Home%20Care&amp;product=1</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Kitchen%2C%20Bathroom%20%26%20Home%20Care&amp;product=2</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Kitchen%2C%20Bathroom%20%26%20Home%20Care&amp;product=3</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marketchoice.github.io/index.html?category=Kitchen%2C%20Bathroom%20%26%20Home%20Care&amp;product=4</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
